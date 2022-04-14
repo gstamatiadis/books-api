@@ -6,4 +6,5 @@ type Query {
     findByPublisher(name: String!): [Book]!
     findByGenre(name: GenreName!): [Book]!
     findByAwardName(awardName: AwardName!): [Book]
+    findByLanguage(name: LanguageName! ): [Book]
 }

@@ -249,4 +249,30 @@ class BookDataFetcherTest {
         // Then
         assertThat(actual).isEmpty();
     }
+
+    @Test
+    void findByLanguage_returnsNonNullBook_whenLanguageFound() {
+        // Given
+        LanguageName languageName = LanguageName.GREEK;
+        Book book = new Book(
+                "Zorba The Greek", new Lang(languageName), "blurb", new Genre(GenreName.NON_FICTION),
+                new PublishingFormat()
+        );
+        given(bookService.findByLanguage(languageName)).willReturn(List.of(book));
+        GraphQLQueryRequest graphQLQueryRequest = new GraphQLQueryRequest(
+                FindByLanguageGraphQLQuery.newRequest()
+                        .name(com.acme.types.LanguageName.valueOf(languageName.name()))
+                        .build(),
+                new FindByLanguageProjectionRoot().lang().name()
+        );
+
+        // When
+        List<String> actual = queryExecutor.executeAndExtractJsonPath(
+                graphQLQueryRequest.serialize(),
+                ROOT + DgsConstants.QUERY.FindByLanguage + "[*]." + DgsConstants.BOOK.Lang + ".name"
+        );
+
+        // Then
+        assertThat(actual).containsExactly(languageName.getName());
+    }
 }

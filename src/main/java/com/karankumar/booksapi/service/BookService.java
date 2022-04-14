@@ -20,6 +20,7 @@ import com.karankumar.booksapi.exception.InvalidISBN13Exception;
 import com.karankumar.booksapi.model.Book;
 import com.karankumar.booksapi.model.award.AwardName;
 import com.karankumar.booksapi.model.genre.GenreName;
+import com.karankumar.booksapi.model.language.LanguageName;
 import com.karankumar.booksapi.repository.BookRepository;
 import lombok.NonNull;
 import org.apache.commons.validator.routines.ISBNValidator;
@@ -99,5 +100,9 @@ public class BookService {
 
     public List<Book> findByAward(@NonNull String awardName) {
         return bookRepository.findByAwardName(AwardName.valueOfLabel(awardName));
+    }
+
+    public List<Book> findByLanguage(LanguageName languageName) {
+        return bookRepository.findByLanguage(languageName.getName());
     }
 }

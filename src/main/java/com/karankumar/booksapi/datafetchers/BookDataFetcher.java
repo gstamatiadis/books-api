@@ -18,6 +18,7 @@ package com.karankumar.booksapi.datafetchers;
 import com.acme.DgsConstants;
 import com.karankumar.booksapi.model.Book;
 import com.karankumar.booksapi.model.genre.GenreName;
+import com.karankumar.booksapi.model.language.LanguageName;
 import com.karankumar.booksapi.service.BookService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
@@ -66,5 +67,10 @@ public class BookDataFetcher {
     @DgsData(parentType = DgsConstants.QUERY_TYPE, field = DgsConstants.QUERY.FindByAwardName)
     public List<Book> findByAward(@InputArgument(DgsConstants.AWARD.AwardName) String awardName) {
         return bookService.findByAward(awardName);
+    }
+
+    @DgsData(parentType = DgsConstants.QUERY_TYPE, field = DgsConstants.QUERY.FindByLanguage)
+    public List<Book> findByLanguage(@InputArgument(DgsConstants.LANG.Name) LanguageName languageName) {
+        return bookService.findByLanguage(languageName);
     }
 }

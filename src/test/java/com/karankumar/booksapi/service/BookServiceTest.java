@@ -279,4 +279,18 @@ class BookServiceTest {
         verify(bookRepository).findByGenre(stringArgumentCaptor.capture());
         assertThat(stringArgumentCaptor.getValue()).isEqualTo(genreName.getGenre());
     }
+
+    @Test
+    void canFindByNonNullLanguageType() {
+        // given
+        LanguageName languageName = LanguageName.ARMENIAN;
+        ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        // when
+        underTest.findByLanguage(languageName);
+
+        // then
+        verify(bookRepository).findByLanguage(stringArgumentCaptor.capture());
+        assertThat(stringArgumentCaptor.getValue()).isEqualTo(languageName.getName());
+    }
 }

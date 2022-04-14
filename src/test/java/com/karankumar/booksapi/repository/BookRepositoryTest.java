@@ -240,4 +240,32 @@ class BookRepositoryTest {
     book.setIsbn13(ISBN);
     return book;
   }
+
+    @Test
+    void findByLanguage() {
+        // given
+        PublishingFormat bookFormat = new PublishingFormat();
+        formatRepository.save(bookFormat);
+        Lang language = new Lang(LanguageName.CZECH);
+        languageRepository.save(language);
+        Genre genre = new Genre(GenreName.FICTION);
+        genreRepository.save(genre);
+        Book book = new Book(
+                TITLE,
+                language,
+                "",
+                genre,
+                bookFormat
+        );
+        bookRepository.save(book);
+
+        // when
+        List<Book> result = bookRepository.findByLanguage(LanguageName.CZECH.getName());
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(result.size()).isOne();
+            softly.assertThat(result.get(0)).isEqualTo(book);
+        });
+    }
 }

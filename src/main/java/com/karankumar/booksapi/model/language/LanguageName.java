@@ -14,7 +14,9 @@
  */
 
 package com.karankumar.booksapi.model.language;
+import lombok.Getter;
 
+@Getter
 public enum LanguageName {
   
     AFRIKAANS("Afrikaans"),

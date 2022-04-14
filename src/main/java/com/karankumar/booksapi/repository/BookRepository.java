@@ -55,4 +55,12 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     @Query("SELECT a.books FROM Award a where a.awardName=?1")
     List<Book> findByAwardName(AwardName awardName);
+
+    @Query(value =
+            " SELECT b.* FROM book b " +
+            "LEFT JOIN lang l  ON b.lang_id  = l.id " +
+            "WHERE l.name LIKE :languageName",
+            nativeQuery = true
+    )
+    List<Book> findByLanguage(@Param("languageName") String languageName);
 }
